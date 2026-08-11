@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sufyan Khan — Graphic & UI Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#181521;
+    --paper:#FCFAF6;
+    --paper-2:#F3EFE6;
+    --violet:#7C3AED;
+    --pink:#F0387A;
+    --amber:#FBBB2C;
+    --violet-tint:#EFE6FE;
+    --pink-tint:#FEE3ED;
+    --amber-tint:#FFF3D6;
+    --line: rgba(24,21,33,0.12);
+    --shadow-hard: 6px 6px 0px var(--ink);
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'Plus Jakarta Sans', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+  }
+
+  a{color:inherit; text-decoration:none;}
+  ::selection{background:var(--violet); color:#fff;}
+
+  /* Texture: dotted paper grain */
+  .grain{
+    position:fixed; inset:0; pointer-events:none; z-index:1; opacity:0.5;
+    background-image: radial-gradient(var(--ink) 0.7px, transparent 0.7px);
+    background-size: 22px 22px;
+    -webkit-mask-image: radial-gradient(ellipse at 50% 0%, black, transparent 75%);
+            mask-image: radial-gradient(ellipse at 50% 0%, black, transparent 75%);
+  }
+
+  /* ===== NAV ===== */
+  header{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 5vw;
+    background:rgba(252,250,246,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:2px solid var(--ink);
+  }
+  .logo-mark{
+    font-family:var(--font-display); font-weight:700; font-size:1.25rem;
+    display:flex; align-items:center; gap:10px;
+  }
+  .logo-mark .dot{
+    width:12px; height:12px; border-radius:50%;
+    background: conic-gradient(from 90deg, var(--violet), var(--pink), var(--amber), var(--violet));
+    display:inline-block;
+  }
+  nav.pills{display:flex; gap:8px; flex-wrap:wrap;}
+  nav.pills a{
+    font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.03em;
+    padding:8px 14px; border:1.5px solid var(--ink); border-radius:99px;
+    transition: all .18s ease;
+    white-space:nowrap;
+  }
+  nav.pills a:nth-child(1):hover{background:var(--violet); color:#fff; border-color:var(--violet);}
+  nav.pills a:nth-child(2):hover{background:var(--pink); color:#fff; border-color:var(--pink);}
+  nav.pills a:nth-child(3):hover{background:var(--amber); color:var(--ink); border-color:var(--amber);}
+  nav.pills a:nth-child(4):hover{background:var(--violet); color:#fff; border-color:var(--violet);}
+  nav.pills a:nth-child(5):hover{background:var(--pink); color:#fff; border-color:var(--pink);}
+  nav.pills a:nth-child(6):hover{background:var(--ink); color:#fff;}
+  #navToggle{display:none;}
+  .burger{display:none; font-family:var(--font-mono); border:1.5px solid var(--ink); border-radius:8px; padding:8px 12px; cursor:pointer; background:none; font-size:0.8rem;}
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative; padding:9vh 5vw 12vh; overflow:hidden;
+  }
+  .hero-shape{
+    position:absolute; border-radius:50%; filter:blur(2px); z-index:0; opacity:0.9;
+    animation: float 9s ease-in-out infinite;
+  }
+  @keyframes float{ 0%,100%{transform:translateY(0) rotate(0deg);} 50%{transform:translateY(-22px) rotate(8deg);} }
+  .s1{width:260px; height:260px; background:var(--amber); top:-60px; right:8vw; animation-delay:0s;}
+  .s2{width:140px; height:140px; background:var(--pink); top:220px; right:22vw; animation-delay:1.4s; opacity:0.85;}
+  .s3{width:90px; height:90px; background:var(--violet); border-radius:18px; top:60px; right:2vw; animation-delay:2.1s; transform:rotate(20deg);}
+
+  .eyebrow{
+    font-family:var(--font-mono); font-size:0.8rem; letter-spacing:0.08em;
+    text-transform:uppercase; display:inline-flex; align-items:center; gap:8px;
+    background:var(--ink); color:var(--paper); padding:7px 16px; border-radius:99px;
+    position:relative; z-index:2;
+  }
+  .eyebrow .pulse{width:8px; height:8px; border-radius:50%; background:#7CF29C; animation:pulse 1.6s infinite;}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(124,242,156,0.6);} 70%{box-shadow:0 0 0 8px rgba(124,242,156,0);} 100%{box-shadow:0 0 0 0 rgba(124,242,156,0);}}
+
+  .hero h1{
+    position:relative; z-index:2;
+    font-family:var(--font-display); font-weight:700;
+    font-size:clamp(3rem, 9vw, 7.2rem); line-height:0.94; letter-spacing:-0.02em;
+    margin-top:22px;
+  }
+  .hero h1 .stroke{
+    -webkit-text-stroke: 2px var(--ink); color:transparent;
+  }
+  .hero h1 .fill{
+    background: linear-gradient(100deg, var(--violet) 10%, var(--pink) 55%, var(--amber) 95%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero-sub{
+    position:relative; z-index:2; max-width:560px; margin-top:26px;
+    font-size:1.08rem; line-height:1.65; color:#3a3547;
+  }
+  .hero-actions{position:relative; z-index:2; display:flex; gap:16px; margin-top:38px; flex-wrap:wrap;}
+  .btn{
+    font-family:var(--font-mono); font-size:0.82rem; letter-spacing:0.02em;
+    padding:14px 26px; border-radius:99px; border:2px solid var(--ink);
+    display:inline-flex; align-items:center; gap:8px; cursor:pointer;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-solid{background:var(--ink); color:var(--paper); box-shadow: var(--shadow-hard);}
+  .btn-solid:hover{transform:translate(-3px,-3px); box-shadow:9px 9px 0px var(--violet);}
+  .btn-ghost{background:transparent; box-shadow: var(--shadow-hard);}
+  .btn-ghost:hover{transform:translate(-3px,-3px); box-shadow:9px 9px 0px var(--pink);}
+
+  .hero-strip{
+    position:relative; z-index:2; margin-top:70px; padding-top:26px; border-top:2px dashed var(--line);
+    display:flex; gap:44px; flex-wrap:wrap;
+  }
+  .strip-item{font-family:var(--font-mono); font-size:0.72rem; text-transform:uppercase; letter-spacing:0.06em; color:#565065;}
+  .strip-item b{display:block; font-family:var(--font-display); font-size:1.6rem; color:var(--ink); letter-spacing:0;}
+
+  /* ===== SECTION SHELL ===== */
+  section.category{
+    padding:11vh 5vw; position:relative; border-top:2px solid var(--ink);
+  }
+  .cat-head{
+    display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap;
+    margin-bottom:52px;
+  }
+  .cat-tag{
+    font-family:var(--font-mono); font-size:0.75rem; padding:5px 12px; border-radius:99px;
+    display:inline-block; margin-bottom:16px; border:1.5px solid var(--ink);
+  }
+  .cat-head h2{
+    font-family:var(--font-display); font-weight:700; font-size:clamp(2.1rem, 5vw, 3.6rem);
+    letter-spacing:-0.01em;
+  }
+  .cat-desc{max-width:340px; font-size:0.95rem; line-height:1.6; color:#4a4457; padding-bottom:6px;}
+
+  .grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:22px;}
+  @media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:600px){.grid{grid-template-columns:1fr;}}
+
+  .card{
+    border:2px solid var(--ink); border-radius:20px; overflow:hidden;
+    background:var(--paper); transition: transform .2s ease, box-shadow .2s ease;
+    display:flex; flex-direction:column;
+  }
+  .card:hover{transform:translate(-4px,-4px);}
+  .card-visual{
+    aspect-ratio:4/3; display:flex; align-items:center; justify-content:center;
+    position:relative; border-bottom:2px solid var(--ink); overflow:hidden; cursor:zoom-in;
+  }
+  .card-visual svg{width:38%; height:38%; opacity:0.9;}
+  .card-visual img{width:100%; height:100%; display:block; transition:transform .35s ease;}
+  .card:hover .card-visual img{transform:scale(1.045);}
+  .card-visual.contain img{object-fit:contain; padding:14px; background:#fff;}
+  .card-visual.cover img{object-fit:cover;}
+  .card-visual .plus{
+    position:absolute; bottom:12px; right:14px; font-family:var(--font-mono);
+    font-size:0.68rem; background:var(--ink); color:var(--paper); padding:4px 10px; border-radius:99px;
+  }
+  .card-body{padding:18px 20px 22px;}
+  .card-body .num{font-family:var(--font-mono); font-size:0.7rem; color:#8a8494;}
+  .card-body h3{font-family:var(--font-display); font-size:1.15rem; margin-top:4px;}
+  .card-body p{font-size:0.85rem; color:#5c5568; margin-top:6px; line-height:1.5;}
+
+  /* section color themes */
+  #logo .card-visual{background:var(--violet-tint);}
+  #poster .card-visual{aspect-ratio:3/4; background:var(--pink-tint);}
+  #thumbnail .card-visual{aspect-ratio:16/9; background:var(--amber-tint);}
+  #print .card-visual{aspect-ratio:3/4; background:var(--violet-tint);}
+  #social .card-visual{aspect-ratio:1/1; background:var(--pink-tint);}
+
+  /* ===== LIGHTBOX ===== */
+  .lightbox{
+    position:fixed; inset:0; z-index:200; background:rgba(24,21,33,0.92);
+    display:none; align-items:center; justify-content:center; padding:5vh 4vw;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:100%; max-height:90vh; border-radius:10px; box-shadow:0 20px 60px rgba(0,0,0,0.5);}
+  .lightbox-close{
+    position:absolute; top:22px; right:26px; font-family:var(--font-mono); color:var(--paper);
+    border:1.5px solid rgba(252,250,246,0.4); border-radius:99px; padding:10px 18px; cursor:pointer; background:none; font-size:0.8rem;
+  }
+  .lightbox-close:hover{background:var(--paper); color:var(--ink);}
+
+  /* ===== ABOUT / SKILLS ===== */
+  .about{
+    padding:11vh 5vw; border-top:2px solid var(--ink);
+    display:grid; grid-template-columns:1fr 1fr; gap:60px;
+  }
+  @media(max-width:850px){.about{grid-template-columns:1fr;}}
+  .about h2{font-family:var(--font-display); font-size:clamp(1.8rem,4vw,2.6rem); margin-bottom:18px;}
+  .about p{font-size:1rem; line-height:1.75; color:#3a3547;}
+  .skills-wrap{display:flex; flex-wrap:wrap; gap:10px; margin-top:26px;}
+  .skill-chip{
+    font-family:var(--font-mono); font-size:0.78rem; padding:9px 16px;
+    border:1.5px solid var(--ink); border-radius:10px; transform:rotate(-1deg);
+  }
+  .skill-chip:nth-child(3n+1){background:var(--violet); color:#fff; border-color:var(--violet); transform:rotate(1.5deg);}
+  .skill-chip:nth-child(3n+2){background:var(--pink); color:#fff; border-color:var(--pink); transform:rotate(-2deg);}
+  .skill-chip:nth-child(3n+3){background:var(--amber); border-color:var(--amber); transform:rotate(1deg);}
+
+  .tools-list{margin-top:36px; border-top:1.5px dashed var(--line);}
+  .tools-list div{
+    display:flex; justify-content:space-between; padding:14px 0;
+    border-bottom:1.5px dashed var(--line); font-family:var(--font-mono); font-size:0.85rem;
+  }
+
+  /* ===== CONTACT ===== */
+  .contact{
+    padding:12vh 5vw 8vh; border-top:2px solid var(--ink);
+    background:var(--ink); color:var(--paper); position:relative; overflow:hidden;
+  }
+  .contact::before{
+    content:""; position:absolute; width:480px; height:480px; border-radius:50%;
+    background:radial-gradient(circle, var(--violet), transparent 70%); opacity:0.5;
+    top:-200px; left:-150px;
+  }
+  .contact::after{
+    content:""; position:absolute; width:420px; height:420px; border-radius:50%;
+    background:radial-gradient(circle, var(--pink), transparent 70%); opacity:0.4;
+    bottom:-220px; right:-120px;
+  }
+  .contact-inner{position:relative; z-index:2;}
+  .contact .eyebrow{background:var(--amber); color:var(--ink);}
+  .contact h2{
+    font-family:var(--font-display); font-weight:700; font-size:clamp(2.4rem,7vw,5rem);
+    margin-top:20px; line-height:1.02; max-width:800px;
+  }
+  .contact-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:60px;
+  }
+  @media(max-width:800px){.contact-grid{grid-template-columns:1fr;}}
+  .contact-card{
+    border:1.5px solid rgba(252,250,246,0.25); border-radius:16px; padding:24px;
+    transition: border-color .2s ease, transform .2s ease;
+  }
+  .contact-card:hover{transform:translateY(-4px); border-color:var(--amber);}
+  .contact-card .lbl{font-family:var(--font-mono); font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; opacity:0.65;}
+  .contact-card .val{font-family:var(--font-display); font-size:1.25rem; margin-top:10px;}
+  .socials{display:flex; gap:14px; margin-top:56px; flex-wrap:wrap;}
+  .socials a{
+    font-family:var(--font-mono); font-size:0.78rem; border:1.5px solid rgba(252,250,246,0.35);
+    padding:10px 18px; border-radius:99px; transition:.2s ease;
+  }
+  .socials a:hover{background:var(--paper); color:var(--ink); border-color:var(--paper);}
+
+  footer{
+    text-align:center; padding:26px; font-family:var(--font-mono); font-size:0.72rem;
+    color:rgba(252,250,246,0.55); border-top:1px dashed rgba(252,250,246,0.2); position:relative; z-index:2;
+  }
+
+  @media(max-width:760px){
+    nav.pills{display:none; position:absolute; top:100%; left:0; right:0; background:var(--paper); flex-direction:column; padding:14px 5vw; border-bottom:2px solid var(--ink);}
+    #navToggle:checked ~ nav.pills{display:flex;}
+    .burger{display:inline-block;}
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<header>
+  <div class="logo-mark"><span class="dot"></span>SK / Sufyan Khan</div>
+  <input type="checkbox" id="navToggle" style="display:none;">
+  <label for="navToggle" class="burger">Menu</label>
+  <nav class="pills">
+    <a href="#logo">Logo</a>
+    <a href="#poster">Poster</a>
+    <a href="#thumbnail">Thumbnail</a>
+    <a href="#print">Print</a>
+    <a href="#social">Social</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-shape s1"></div>
+  <div class="hero-shape s2"></div>
+  <div class="hero-shape s3"></div>
+
+  <span class="eyebrow"><span class="pulse"></span> Available for freelance work</span>
+
+  <h1>
+    <span class="stroke">SUFYAN</span><br>
+    <span class="fill">KHAN.</span>
+  </h1>
+
+  <p class="hero-sub">
+    Graphic & UI Designer crafting bold logos, scroll-stopping posters, clickable thumbnails,
+    print-ready layouts, and social media visuals that actually get noticed.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#contact" class="btn btn-solid">Let's work together →</a>
+    <a href="#logo" class="btn btn-ghost">View my work</a>
+  </div>
+
+  <div class="hero-strip">
+    <div class="strip-item"><b>05</b>Design categories</div>
+    <div class="strip-item"><b>100%</b>Custom concepts</div>
+    <div class="strip-item"><b>24h</b>Avg. response time</div>
+  </div>
+</section>
+
+<!-- LOGO DESIGN -->
+<section class="category" id="logo">
+  <div class="cat-head">
+    <div>
+      <span class="cat-tag" style="background:var(--violet-tint);">01 — Identity</span>
+      <h2>Logo Design</h2>
+    </div>
+    <p class="cat-desc">Marks built to work at 16px and 16 feet — distinct, memorable, and true to the brand behind them.</p>
+  </div>
+  <div class="grid">
+    <div class="card"><div class="card-visual contain"><img src="assets/logo-1-restaurant.jpg" alt="Restaurant brand logo" loading="lazy"></div><div class="card-body"><span class="num">LOGO / 01</span><h3>Restaurant Brand Mark</h3><p>Bowl-inspired icon built for a modern eatery identity.</p></div></div>
+    <div class="card"><div class="card-visual contain"><img src="assets/logo-2-petcare.jpg" alt="Pet Care logo" loading="lazy"></div><div class="card-body"><span class="num">LOGO / 02</span><h3>Pet Care Logo</h3><p>A cross-shaped mark blending a cat and dog silhouette.</p></div></div>
+    <div class="card"><div class="card-visual contain"><img src="assets/logo-3-bakery.jpg" alt="Bakery logo badges" loading="lazy"></div><div class="card-body"><span class="num">LOGO / 03</span><h3>Bakery Badge Set</h3><p>A family of vintage-style badge logos for a bakery brand.</p></div></div>
+  </div>
+</section>
+
+<!-- POSTER DESIGN -->
+<section class="category" id="poster">
+  <div class="cat-head">
+    <div>
+      <span class="cat-tag" style="background:var(--pink-tint);">02 — Visual Story</span>
+      <h2>Poster Design</h2>
+    </div>
+    <p class="cat-desc">Layouts that grab attention in three seconds and hold it — for events, campaigns, and causes.</p>
+  </div>
+  <div class="grid">
+    <div class="card"><div class="card-visual cover"><img src="assets/poster-1-jewellery.jpg" alt="Jewellery exhibition invitation poster" loading="lazy"></div><div class="card-body"><span class="num">POSTER / 01</span><h3>Exhibition Invitation</h3><p>An elegant invitation poster for a jewellery brand's Delhi exhibition.</p></div></div>
+    <div class="card"><div class="card-visual cover"><img src="assets/poster-2-graphicdesign.jpg" alt="Graphic design magazine cover poster" loading="lazy"></div><div class="card-body"><span class="num">POSTER / 02</span><h3>Magazine Cover Concept</h3><p>An editorial-style cover exploring layered portrait photography.</p></div></div>
+    <div class="card"><div class="card-visual cover"><img src="assets/poster-3-designday.jpg" alt="Designer's Day illustrated poster" loading="lazy"></div><div class="card-body"><span class="num">POSTER / 03</span><h3>Designer's Day Poster</h3><p>A playful illustrated poster celebrating everyday design chaos.</p></div></div>
+  </div>
+</section>
+
+<!-- THUMBNAIL DESIGN -->
+<section class="category" id="thumbnail">
+  <div class="cat-head">
+    <div>
+      <span class="cat-tag" style="background:var(--amber-tint);">03 — Click-worthy</span>
+      <h2>Thumbnail Design</h2>
+    </div>
+    <p class="cat-desc">High-contrast, high-emotion thumbnails designed to win the scroll and boost the click-through rate.</p>
+  </div>
+  <div class="grid">
+    <div class="card"><div class="card-visual cover"><img src="assets/thumb-1-whystuck.jpg" alt="Why You're Stuck YouTube thumbnail" loading="lazy"></div><div class="card-body"><span class="num">THUMB / 01</span><h3>"Why You're Stuck"</h3><p>A bold portrait-driven thumbnail for a self-improvement video.</p></div></div>
+    <div class="card"><div class="card-visual cover"><img src="assets/thumb-2-buildapp.jpg" alt="Build An App In Mins YouTube thumbnail" loading="lazy"></div><div class="card-body"><span class="num">THUMB / 02</span><h3>"Build An App In Mins"</h3><p>High-contrast tech thumbnail combining UI mockup and portrait.</p></div></div>
+    <div class="card"><div class="card-visual cover"><img src="assets/thumb-3-restart.jpg" alt="Day 1 vs Day 7 restart thumbnail" loading="lazy"></div><div class="card-body"><span class="num">THUMB / 03</span><h3>"Restart: Day 1 vs Day 7"</h3><p>A hand-drawn before/after concept for a habit-reset video.</p></div></div>
+  </div>
+</section>
+
+<!-- PRINT DESIGN -->
+<section class="category" id="print">
+  <div class="cat-head">
+    <div>
+      <span class="cat-tag" style="background:var(--violet-tint);">04 — Tangible</span>
+      <h2>Print Design</h2>
+    </div>
+    <p class="cat-desc">Business cards, brochures, and packaging — designed to look as good on paper as they do on screen.</p>
+  </div>
+  <div class="grid">
+    <div class="card"><div class="card-visual cover"><img src="assets/print-1-billboard.jpg" alt="WeWork outdoor billboard design" loading="lazy"></div><div class="card-body"><span class="num">PRINT / 01</span><h3>Outdoor Billboard</h3><p>Large-format billboard concept designed to stay clear at a distance.</p></div></div>
+    <div class="card"><div class="card-visual contain"><img src="assets/print-2-banners.jpg" alt="Set of promotional web and print banners" loading="lazy"></div><div class="card-body"><span class="num">PRINT / 02</span><h3>Promotional Banner Set</h3><p>A collection of ad banners across fashion, food, and travel categories.</p></div></div>
+    <div class="card"><div class="card-visual cover"><img src="assets/print-3-standee.jpg" alt="Roll-up standee design set" loading="lazy"></div><div class="card-body"><span class="num">PRINT / 03</span><h3>Roll-up Standee</h3><p>A 3-panel standee set built for exhibitions and service showcases.</p></div></div>
+  </div>
+</section>
+
+<!-- SOCIAL MEDIA DESIGN -->
+<section class="category" id="social">
+  <div class="cat-head">
+    <div>
+      <span class="cat-tag" style="background:var(--pink-tint);">05 — Scroll-stopping</span>
+      <h2>Social Media Design</h2>
+    </div>
+    <p class="cat-desc">Feed posts, carousels, and story templates built for engagement, on-brand and platform-ready.</p>
+  </div>
+  <div class="grid">
+    <div class="card"><div class="card-visual cover"><img src="assets/social-1-pastel.jpg" alt="Pastel fashion Instagram grid" loading="lazy"></div><div class="card-body"><span class="num">SOCIAL / 01</span><h3>Pastel Fashion Grid</h3><p>A soft, editorial Instagram grid for a fashion brand's content calendar.</p></div></div>
+    <div class="card"><div class="card-visual cover"><img src="assets/social-2-studioemi.jpg" alt="Studio Emi bold red Instagram grid" loading="lazy"></div><div class="card-body"><span class="num">SOCIAL / 02</span><h3>Bold Content Grid</h3><p>High-contrast red and white carousel posts built for scroll-stopping impact.</p></div></div>
+    <div class="card"><div class="card-visual cover"><img src="assets/social-3-fashion.jpg" alt="Minimal fashion sale Instagram grid" loading="lazy"></div><div class="card-body"><span class="num">SOCIAL / 03</span><h3>Minimal Sale Campaign</h3><p>A clean, minimal grid of flash-sale and new-collection posts.</p></div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div>
+    <h2>About Sufyan</h2>
+    <p>
+      I'm a graphic and UI designer who turns ideas into visuals people actually stop for —
+      whether that's a logo that has to work on a tiny app icon, or a poster that needs to win
+      the wall from across the room. I care about the details most people scroll past.
+    </p>
+    <div class="tools-list">
+      <div><span>Adobe Photoshop</span><span>Expert</span></div>
+      <div><span>Adobe Illustrator</span><span>Expert</span></div>
+      <div><span>Figma</span><span>Advanced</span></div>
+      <div><span>Canva Pro</span><span>Advanced</span></div>
+    </div>
+  </div>
+  <div>
+    <h2>What I Design</h2>
+    <div class="skills-wrap">
+      <span class="skill-chip">Logo Design</span>
+      <span class="skill-chip">Poster Design</span>
+      <span class="skill-chip">Thumbnail Design</span>
+      <span class="skill-chip">Print Design</span>
+      <span class="skill-chip">Social Media Design</span>
+      <span class="skill-chip">Brand Identity</span>
+      <span class="skill-chip">UI Design</span>
+      <span class="skill-chip">Packaging</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <span class="eyebrow">Let's talk</span>
+    <h2>Got a project in mind?<br>Let's design it together.</h2>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="lbl">Email</div>
+        <div class="val"><a href="mailto:sufyanskt7@gmail.com">sufyanskt7@gmail.com</a></div>
+      </div>
+      <div class="contact-card">
+        <div class="lbl">Phone</div>
+        <div class="val"><a href="tel:+923300820778">+92 330 0820778</a></div>
+      </div>
+      <div class="contact-card">
+        <div class="lbl">Based in</div>
+        <div class="val">Pakistan</div>
+      </div>
+    </div>
+
+    <div class="socials">
+      <a href="https://www.instagram.com/sufyankhan57509?igsh=MWtkMDlrdWpiOHZ4cQ==" target="_blank" rel="noopener">Instagram ↗</a>
+      <a href="#">Behance ↗</a>
+      <a href="#">LinkedIn ↗</a>
+      <a href="#">Facebook ↗</a>
+      <a href="https://wa.me/923300820778" target="_blank" rel="noopener">WhatsApp ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Sufyan Khan — Graphic & UI Designer. Built with intent.</footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">Close ✕</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<script>
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  document.querySelectorAll('.card-visual img').forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('open');
+    });
+  });
+  function closeLightbox(){ lightbox.classList.remove('open'); lightboxImg.src=''; }
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeLightbox(); });
+</script>
+
+</body>
+</html>
